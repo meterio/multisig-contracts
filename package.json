@@ -18,5 +18,8 @@
     "dotenv": "^8.2.0",
     "eth-sig-util": "^3.0.1",
     "tslib": "^2.1.0"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.5.1"
   }
 }

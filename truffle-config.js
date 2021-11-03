@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { TruffleProvider } = require("@harmony-js/core");
+const HDWalletProvider = require("@truffle/hdwallet-provider")
 //Local
 const local_mnemonic = process.env.LOCAL_MNEMONIC;
 const local_private_key = process.env.LOCAL_PRIVATE_KEY;
@@ -20,48 +21,27 @@ gasPrice = process.env.GAS_PRICE;
 module.exports = {
   networks: {
     local: {
-      network_id: "2",
-      chain_id: 2,
-      provider: () => {
-        const truffleProvider = new TruffleProvider(
-          local_url,
-          { memonic: local_mnemonic },
-          { shardID: 0, chainId: 2 },
-          { gasLimit: gasLimit, gasPrice: gasPrice }
-        );
-        const newAcc = truffleProvider.addByPrivateKey(local_private_key);
-        truffleProvider.setSigner(newAcc);
-        return truffleProvider;
-      },
+      network_id: "5777",
+      chain_id: 5777,
+      provider: () => (
+        new HDWalletProvider({
+          privateKeys: [local_private_key],
+          providerOrUrl: local_url
+        })
+      ),
       gas: 1000258612000000000,
     },
     testnet: {
-      network_id: "2",
-      provider: () => {
-        const truffleProvider = new TruffleProvider(
-          testnet_url,
-          { memonic: testnet_mnemonic },
-          { shardID: 0, chainId: 2 },
-          { gasLimit: gasLimit, gasPrice: gasPrice }
-        );
-        const newAcc = truffleProvider.addByPrivateKey(testnet_private_key);
-        truffleProvider.setSigner(newAcc);
-        return truffleProvider;
-      },
+      network_id: "101",
+      provider: () => (
+        new HDWalletProvider({privateKeys:[testnet_private_key], providerOrUrl:testnet_url})
+      ),
     },
     mainnet: {
-      network_id: "1",
-      provider: () => {
-        const truffleProvider = new TruffleProvider(
-          mainnet_url,
-          { memonic: mainnet_mnemonic },
-          { shardID: 0, chainId: 1 },
-          { gasLimit: gasLimit, gasPrice: gasPrice }
-        );
-        const newAcc = truffleProvider.addByPrivateKey(mainnet_private_key);
-        truffleProvider.setSigner(newAcc);
-        return truffleProvider;
-      },
+      network_id: "65",
+      provider: () => (
+        new HDWalletProvider({privateKeys:[testnet_private_key], providerOrUrl:testnet_url})
+      ),
     },
   },
 
